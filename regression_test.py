@@ -10,7 +10,7 @@ def check_drop_rule():
     print("\n=== Current Flow Table ===")
     print(flows)
 
-    if 'nw_src=10.0.0.1' in flows and 'nw_dst=10.0.0.3' in flows:
+    if 'nw_src=10.0.0.1' in flows and 'nw_dst=10.0.0.3' in flows and 'actions=drop' in flows:
         print("✅ PASS: Drop rule is present and active")
         return True
     else:
@@ -18,16 +18,17 @@ def check_drop_rule():
         return False
 
 print("=== Regression Test: Packet Drop Rules ===")
-print("\n[Test 1] Checking drop rule at start...")
+
+print("\n[Test 1] Checking drop rule after traffic...")
 result1 = check_drop_rule()
 
-print("\n[Waiting 5 seconds to simulate traffic...]")
+print("\n[Waiting 5 seconds to verify persistence...]")
 time.sleep(5)
 
-print("\n[Test 2] Checking drop rule persists after delay...")
+print("\n[Test 2] Checking drop rule persists...")
 result2 = check_drop_rule()
 
 if result1 and result2:
-    print("\n✅ ALL TESTS PASSED - Drop rules persist correctly")
+    print("\n✅ ALL TESTS PASSED")
 else:
     print("\n❌ SOME TESTS FAILED")
